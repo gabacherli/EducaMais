@@ -3,7 +3,7 @@ import pygame
 
 class Boy(pygame.sprite.Sprite):
     def __init__(self):
-        init_character = pygame.image.load("Misc/Characters/looking_right.png")
+        init_character = pygame.image.load("Misc/Images/Characters/looking_right.png")
         pygame.sprite.Sprite.__init__(self)
         self.vl_x = 1
         self.vl_y = 3
@@ -16,11 +16,11 @@ class Boy(pygame.sprite.Sprite):
         self.gravidade = 0.009
 
     def move_esquerda(self):
-        self.image = self.scale_image("Misc/Characters/looking_left.png")
+        self.image = self.scale_image("Misc/Images/Characters/looking_left.png")
         self.velocidade_x = -1
 
     def move_direita(self):
-        self.image = self.scale_image("Misc/Characters/looking_right.png")
+        self.image = self.scale_image("Misc/Images/Characters/looking_right.png")
         self.velocidade_x = 1
         self.vl_x = 1
         self.vl_y = 1

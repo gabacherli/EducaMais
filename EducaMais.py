@@ -1,17 +1,18 @@
-import pygame, sys
+import pygame
+import sys
 
 from Model.Boy import Boy
 
 pygame.init()
 
-altura = 762
-largura = 1824
+width = 1824
+height = 762
 
-window = pygame.display.set_mode((largura, altura))
+window = pygame.display.set_mode((width, height))
 tempo = pygame.time.Clock()
 
-background_image = pygame.image.load('Misc/Background/yellow.jpg').convert_alpha()
-background = pygame.transform.scale(background_image, (largura, altura))
+background_image = pygame.image.load('Misc/Images/Background/yellow.jpg').convert_alpha()
+background = pygame.transform.scale(background_image, (width, height))
 pygame.display.set_caption("EducaMais")
 
 boy = Boy()
