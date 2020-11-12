@@ -30,10 +30,26 @@ while True:
     characters.draw(window)
     characters.update()
 
-    if boy.rect.centery > 550:
+    # Manter personagem dentro dos limites da janela #
+    # Impedir que o personagem ultrapasse o limite horizontal pela esquerda #
+    if boy.rect.centerx < 1:
+        boy.velocidade_x = 0
+        boy.rect.centerx = 1
+
+    # Impedir que o personagem ultrapasse o limite vertical por baixo e manter personagem em contato com o solo #
+    if boy.rect.centery > settings.height/1.38:
         boy.velocidade_y = 0
-        boy.rect.centery = 550
-        tempo = pygame.time.Clock()
+        boy.rect.centery = settings.height/1.38
+
+    # Impedir que o personagem ultrapasse o limite horizontal pela direita #
+    if boy.rect.centerx > settings.width - settings.char_ratio[0]:
+        boy.velocidade_x = 0
+        boy.rect.centerx = settings.width - settings.char_ratio[0]
+
+    # Impedir que o personagem ultrapasse o limite vertical por cima #
+    if boy.rect.centery < -(settings.char_ratio[1]):
+        boy.velocidade_y = 0
+        boy.rect.centery = -(settings.char_ratio[1])
 
     # Atualiza a tela #
     pygame.display.update()
@@ -44,14 +60,14 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                boy.move_direita(settings)
             if event.key == pygame.K_LEFT:
-                boy.move_esquerda(settings)
-            if event.key == pygame.K_SPACE and boy.velocidade_y <= 1:
-                boy.pular()
+                boy.mover_para_esquerda(settings)
+            if event.key == pygame.K_RIGHT:
+                boy.mover_para_direita(settings)
+            if event.key == pygame.K_SPACE:
+                boy.pular(settings)
         if event.type == pygame.KEYUP:
             if event.key in [pygame.K_LEFT, pygame.K_RIGHT]:
-                boy.para_horizontal()
+                boy.parar_movimento_horizontal()
             if event.key in [pygame.K_SPACE]:
-                boy.para_vertical()
+                boy.parar_movimento_vertical()
