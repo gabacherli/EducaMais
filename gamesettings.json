@@ -1,4 +1,11 @@
 {
-  "SoundOn": true,
-  "BackgroundImage": "blue.jpg"
+  "sound_on": true,
+  "background_image": "Misc/Images/Background/yellow.jpg",
+  "res_width": 1824,
+  "res_height": 762,
+  "character_to_the_left": "Misc/Images/Characters/looking_left.png",
+  "character_to_the_right": "Misc/Images/Characters/looking_right.png",
+  "character_ratio": "110,145",
+  "character_starting_pos_x": "100,450",
+  "character_starting_pos_y": "20,-100"
 }
