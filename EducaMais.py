@@ -65,7 +65,7 @@ while True:
             if event.key == pygame.K_RIGHT:
                 boy.mover_para_direita(settings)
             if event.key == pygame.K_SPACE:
-                boy.pular(settings)
+                boy.pular()
         if event.type == pygame.KEYUP:
             if event.key in [pygame.K_LEFT, pygame.K_RIGHT]:
                 boy.parar_movimento_horizontal()

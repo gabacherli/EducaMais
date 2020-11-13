@@ -11,7 +11,7 @@ class Boy(pygame.sprite.Sprite):
         self.rect = pygame.Rect(settings.char_starting_pos_x, settings.char_starting_pos_y)
         self.velocidade_x = 0
         self.velocidade_y = 0
-        self.gravidade = 0.009
+        self.gravidade = 0.03
 
     def mover_para_esquerda(self, settings):
         self.image = self.scale_image(settings.char_left, settings.char_ratio)
@@ -24,7 +24,7 @@ class Boy(pygame.sprite.Sprite):
         self.vl_y = 1
 
     def pular(self):
-        self.velocidade_y = -5
+        self.velocidade_y = -3
 
     def update(self):
         self.rect.centerx += self.velocidade_x
