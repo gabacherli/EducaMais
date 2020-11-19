@@ -14,3 +14,6 @@ class Settings():
         self.char_ratio = tuple(map(int, settings_json['character_ratio'].split(',')))
         self.char_starting_pos_x = tuple(map(int, settings_json['character_starting_pos_x'].split(',')))
         self.char_starting_pos_y = tuple(map(int, settings_json['character_starting_pos_y'].split(',')))
+        self.obj_apagador = settings_json['objeto_apagador']
+        self.obj_apagador_starting_pos_x = tuple(map(int, settings_json['objeto_apagador_starting_pos_x'].split(',')))
+        self.obj_apagador_ratio = tuple(map(int, settings_json['objeto_apagador_ratio'].split(',')))

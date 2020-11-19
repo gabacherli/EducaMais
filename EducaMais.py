@@ -4,6 +4,7 @@ import json
 
 from Model.Boy import Boy
 from Model.Settings import Settings
+from Model.Apagador import Apagador
 
 pygame.init()
 pygame.display.set_caption("EducaMais")
@@ -23,12 +24,22 @@ background = pygame.transform.scale(background_image, (settings.width, settings.
 boy = Boy(settings)
 characters = pygame.sprite.Group(boy)
 
+# Criar instância do objeto Apagador #
+apagador = Apagador(settings)
+obj_apagador = pygame.sprite.Group(apagador)
+
 tempo = pygame.time.Clock()
 
 while True:
     window.blit(background, background.get_rect(center=window.get_rect().center))
     characters.draw(window)
+    obj_apagador.draw(window)
     characters.update()
+    obj_apagador.update()
+
+    # Caso tiver colisão entre o Boy e o Apagador
+    if apagador.rect.colliderect(boy):
+        apagador.rect.x = 1250
 
     # Manter personagem dentro dos limites da janela #
     # Impedir que o personagem ultrapasse o limite horizontal pela esquerda #
