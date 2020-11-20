@@ -5,6 +5,8 @@ import json
 from Model.Boy import Boy
 from Model.Settings import Settings
 from Model.Apagador import Apagador
+from Model.Vida import Vida
+
 
 pygame.init()
 pygame.display.set_caption("EducaMais")
@@ -19,6 +21,7 @@ settings = Settings(settings_json)
 window = pygame.display.set_mode((settings.width, settings.height))
 background_image = pygame.image.load(settings.background_image).convert_alpha()
 background = pygame.transform.scale(background_image, (settings.width, settings.height))
+gameover_img = pygame.image.load(settings.background_image_gameover).convert_alpha()
 
 # Criar instância do personagem #
 boy = Boy(settings)
@@ -28,18 +31,66 @@ characters = pygame.sprite.Group(boy)
 apagador = Apagador(settings)
 obj_apagador = pygame.sprite.Group(apagador)
 
+# Som para colisão 
+def som_colisao():
+    pygame.mixer.music.load(settings.som_colisao)
+    pygame.mixer.music.play(0)
+
+# Som Game over 
+def som_gameover():
+    pygame.mixer.music.load(settings.som_gameover)
+    pygame.mixer.music.play(0)
+
+# vidas 
+vida01 = Vida(settings)
+obj_vida01 = pygame.sprite.Group(vida01)
+
+vida02 = Vida(settings)
+obj_vida02 = pygame.sprite.Group(vida02)
+vida02.rect.centerx = 60
+
+vida03 = Vida(settings)
+obj_vida03 = pygame.sprite.Group(vida03)
+vida03.rect.centerx = 110
+
 tempo = pygame.time.Clock()
 
+gameover = False
 while True:
-    window.blit(background, background.get_rect(center=window.get_rect().center))
-    characters.draw(window)
-    obj_apagador.draw(window)
-    characters.update()
-    obj_apagador.update()
+    if not gameover: 
+        window.blit(background, background.get_rect(center=window.get_rect().center))
+        obj_vida01.draw(window)
+        obj_vida02.draw(window)
+        obj_vida03.draw(window)
+        characters.draw(window)
+        obj_apagador.draw(window)
+        characters.update()
+        obj_apagador.update()
 
-    # Caso tiver colisão entre o Boy e o Apagador
-    if apagador.rect.colliderect(boy):
-        apagador.rect.x = 1250
+        # Caso tiver colisão entre o Boy e o Apagador
+        if apagador.rect.colliderect(boy):
+            print("Colidiu")  
+            apagador.rect.x = 1250
+            if vida01:
+                vida01.kill()
+                print("Perdeu 1 vida")
+                vida01 = False
+                som_colisao()
+            elif vida02:
+                vida02.kill()
+                print("Perdeu 2 vidas")
+                vida02 = False
+                som_colisao()
+            elif vida03:
+                vida03.kill()
+                print("Perdeu 3 vidas")
+                vida03 = False
+
+            
+            if vida03 == False:
+                gameover =  True
+                window.blit(gameover_img, gameover_img.get_rect(center=window.get_rect().center))
+                som_gameover()
 
     # Manter personagem dentro dos limites da janela #
     # Impedir que o personagem ultrapasse o limite horizontal pela esquerda #
