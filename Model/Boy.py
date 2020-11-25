@@ -4,30 +4,30 @@ class Boy(pygame.sprite.Sprite):
     def __init__(self, settings):
         boy = pygame.image.load(settings.char_right)
         pygame.sprite.Sprite.__init__(self)
-        self.sprites_Right = []
-        self.sprites_Left = []
-        self.is_movementing_Right = False
-        self.is_movementing_Left = False
-        self.sprites_Right.append(self.scale_image(settings.char_right, settings.char_ratio))
-        self.sprites_Right.append(self.scale_image(settings.char_walking_right1, settings.char_ratio))
-        self.sprites_Right.append(self.scale_image(settings.char_walking_right2, settings.char_ratio))
-        self.sprites_Left.append(self.scale_image(settings.char_left, settings.char_ratio))
-        self.sprites_Left.append(self.scale_image(settings.char_walking_left1, settings.char_ratio))
-        self.sprites_Left.append(self.scale_image(settings.char_walking_left2, settings.char_ratio))
+        self.sprites_to_the_right = []
+        self.sprites_to_the_left = []
+        self.is_moving_to_the_right = False
+        self.is_moving_to_the_left = False
+        self.sprites_to_the_right.append(self.scale_image(settings.char_right, settings.char_ratio))
+        self.sprites_to_the_right.append(self.scale_image(settings.char_walking_right1, settings.char_ratio))
+        self.sprites_to_the_right.append(self.scale_image(settings.char_walking_right2, settings.char_ratio))
+        self.sprites_to_the_left.append(self.scale_image(settings.char_left, settings.char_ratio))
+        self.sprites_to_the_left.append(self.scale_image(settings.char_walking_left1, settings.char_ratio))
+        self.sprites_to_the_left.append(self.scale_image(settings.char_walking_left2, settings.char_ratio))
         self.current_sprite = 0
-        self.image = self.sprites_Right[self.current_sprite]
-        self.rect = pygame.Rect(settings.char_starting_pos_x, settings.char_starting_pos_y)
+        self.image = self.sprites_to_the_right[self.current_sprite]
+        self.rect = pygame.Rect(settings.char_starting_left_top, settings.char_starting_width_height)
         self.velocidade_x = 0
         self.velocidade_y = 0
         self.gravidade = 0.03
 
     def mover_para_esquerda(self, settings):
-        self.is_movementing_Left = True
-        self.velocidade_x = -1
+        self.is_moving_to_the_left = True
+        self.velocidade_x = -3
 
     def mover_para_direita(self, settings):
-        self.is_movementing_Right = True        
-        self.velocidade_x = 1
+        self.is_moving_to_the_right = True        
+        self.velocidade_x = 3
 
     def pular(self):
         self.velocidade_y = -3
@@ -40,27 +40,27 @@ class Boy(pygame.sprite.Sprite):
         self.rect.centery += self.velocidade_y
 
         # Caminhar para a direita
-        if self.is_movementing_Right == True:
+        if self.is_moving_to_the_right == True:
             self.current_sprite += 0.03
-            if self.current_sprite >= len(self.sprites_Right):
+            if self.current_sprite >= len(self.sprites_to_the_right):
                 self.current_sprite = 0
-            self.image = self.sprites_Right[int(self.current_sprite)]    
+            self.image = self.sprites_to_the_right[int(self.current_sprite)]
 
         # Caminhar para a esquerda
-        if self.is_movementing_Left == True:
+        if self.is_moving_to_the_left == True:
             self.current_sprite += 0.03
-            if self.current_sprite >= len(self.sprites_Left):
+            if self.current_sprite >= len(self.sprites_to_the_left):
                 self.current_sprite = 0
-            self.image = self.sprites_Left[int(self.current_sprite)] 
+            self.image = self.sprites_to_the_left[int(self.current_sprite)]
 
     def parar_movimento_horizontal(self):
         self.velocidade_x = 0
-        if self.is_movementing_Right == True:
-            self.is_movementing_Right = False
-            self.image = self.sprites_Right[int(0)] 
-        elif self.is_movementing_Left == True:
-            self.is_movementing_Left = False
-            self.image = self.sprites_Left[int(0)] 
+        if self.is_moving_to_the_right == True:
+            self.is_moving_to_the_right = False
+            self.image = self.sprites_to_the_right[int(0)]
+        elif self.is_moving_to_the_left == True:
+            self.is_moving_to_the_left = False
+            self.image = self.sprites_to_the_left[int(0)]
 
     def parar_movimento_vertical(self):
         self.velocidade_y = 0

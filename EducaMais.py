@@ -1,104 +1,126 @@
 import pygame
 import sys
 import json
+import random
 
 from Model.Boy import Boy
+from Model.Platform import Platform
 from Model.Settings import Settings
-from Model.Apagador import Apagador
-from Model.Vida import Vida
 from Model.Vilão import Vilao
+from Model.Eraser import Eraser
+from Model.Soundboard import Soundboard
+from Model.Life import Life
+from Model.Whiteboard import Whiteboard
 
+def generate_plataforms():
+    current_word = random_words[len(random_words) -1]
+    platforms = []
+
+    for i in current_word:
+        platform = Platform(settings, i)
+        platforms.append(platform)
+        if len(platforms) > 1 and platform.rect.collidelist(platforms):
+            platforms.pop()
+            new_platform = platform.generate_platform_that_wont_collide(settings, platforms, i)
+            platforms.append(new_platform)
+
+    return platforms
 
 pygame.init()
 pygame.display.set_caption("EducaMais")
 
-with open('gamesettings.json') as file:
-    settings_json = json.load(file)
+with open('gamesettings.json') as settings_file:
+    settings_json = json.load(settings_file)
 
-# Instanciando a classe Settings com as propriedades do arquivo gamesettings.json #
+with open('Misc/Text/words.txt') as text_file:
+    words = [line.rstrip() for line in text_file]
+    random_words = random.sample(words, len(words))
+
+# Instanciando as classes de configuração #
 settings = Settings(settings_json)
+soundboard = Soundboard(settings)
 
 # Background e resolução da tela #
 window = pygame.display.set_mode((settings.width, settings.height))
 background_image = pygame.image.load(settings.background_image).convert_alpha()
 background = pygame.transform.scale(background_image, (settings.width, settings.height))
-gameover_img = pygame.image.load(settings.background_image_gameover).convert_alpha()
+
+# Criar instância do quadro branco #
+whiteboard = Whiteboard(settings)
+sprite_whiteboard = pygame.sprite.Group(whiteboard)
 
 # Criar instância do personagem #
 boy = Boy(settings)
-characters = pygame.sprite.Group(boy)
+sprite_boy = pygame.sprite.Group(boy)
 
 # Criar instância do personagem vilão #
 vilao = Vilao(settings)
 char_vilao = pygame.sprite.Group(vilao)
 
+# Criar instância do apagador #
+eraser = Eraser(settings)
+sprite_eraser = pygame.sprite.Group(eraser)
 
-# Criar instância do objeto Apagador #
-apagador = Apagador(settings)
-obj_apagador = pygame.sprite.Group(apagador)
+# Criar sprite das vidas do personagem #
+vidas = []
 
-# Som para colisão 
-def som_colisao():
-    pygame.mixer.music.load(settings.som_colisao)
-    pygame.mixer.music.play(0)
+for i in range(settings.starting_number_of_lives):
+    vidas.append(Life(settings))
+    vidas[i].rect.centerx = vidas[i].rect.centerx if i == 0 else vidas[i - 1].rect.centerx + 60
 
-# Som Game over 
-def som_gameover():
-    pygame.mixer.music.load(settings.som_gameover)
-    pygame.mixer.music.play(0)
+sprite_lives = pygame.sprite.Group(vidas)
 
-# vidas 
-vida01 = Vida(settings)
-obj_vida01 = pygame.sprite.Group(vida01)
+# Plataformas #
+platforms = generate_plataforms()
 
-vida02 = Vida(settings)
-obj_vida02 = pygame.sprite.Group(vida02)
-vida02.rect.centerx = 60
-
-vida03 = Vida(settings)
-obj_vida03 = pygame.sprite.Group(vida03)
-vida03.rect.centerx = 110
+sprite_platforms = pygame.sprite.Group(platforms)
 
 tempo = pygame.time.Clock()
 
 gameover = False
+
 while True:
-    if not gameover: 
+    if not gameover:
+        # Desenhar elementos fixos da tela #
+        current_word = random_words[len(random_words) -1]
+
         window.blit(background, background.get_rect(center=window.get_rect().center))
-        obj_vida01.draw(window)
-        obj_vida02.draw(window)
-        obj_vida03.draw(window)
-        characters.draw(window)
+]
         char_vilao.draw(window)
-        obj_apagador.draw(window)
-        characters.update()
-        obj_apagador.update()
         char_vilao.update()
+        sprite_whiteboard.draw(window)
+        sprite_platforms.draw(window)
+        sprite_boy.draw(window)
+        sprite_eraser.draw(window)
+        sprite_lives.draw(window)
+        sprite_boy.update()
+        sprite_eraser.update()
+        sprite_lives.draw(window)
 
-        # Caso tiver colisão entre o Boy e o Apagador
-        if apagador.rect.colliderect(boy):
-            print("Colidiu")  
-            apagador.rect.x = 1250
-            if vida01:
-                vida01.kill()
-                print("Perdeu 1 vida")
-                vida01 = False
-                som_colisao()
-            elif vida02:
-                vida02.kill()
-                print("Perdeu 2 vidas")
-                vida02 = False
-                som_colisao()
-            elif vida03:
-                vida03.kill()
-                print("Perdeu 3 vidas")
-                vida03 = False
+        # Palavra no quadro-branco #
+        word = whiteboard.write_word_to_word_rectangle(current_word)
+        window.blit(word, whiteboard.word_rectangle)
 
-            
-            if vida03 == False:
-                gameover =  True
-                window.blit(gameover_img, gameover_img.get_rect(center=window.get_rect().center))
-                som_gameover()
+        # Letras nas plataformas #
+        for i in platforms:
+            last_letter = current_word[-1]
+            letter = i.write_letter_to_letter_rectangle(last_letter)
+            window.blit(letter, i.letter_rectangle)
+
+            current_word = current_word[:-1]
+
+        # Caso tenha colisão entre o personagem e o apagador #
+        if eraser.rect.colliderect(boy):
+            eraser.rect.x = settings.width
+            if vidas[len(vidas) - 1] and len(vidas) > 1:
+                vidas[len(vidas) - 1].kill()
+                vidas.pop()
+                soundboard.play_hit_sound(settings.sound_on)
+            else:
+                gameover_image = pygame.image.load(settings.gameover_image).convert_alpha()
+                gameover = True
+                window.blit(gameover_image, gameover_image.get_rect(center=window.get_rect().center))
+                soundboard.play_gameover_sound(settings.sound_on)
 
     # Manter personagem dentro dos limites da janela #
     # Impedir que o personagem ultrapasse o limite horizontal pela esquerda #
@@ -107,9 +129,9 @@ while True:
         boy.rect.centerx = 1
 
     # Impedir que o personagem ultrapasse o limite vertical por baixo e manter personagem em contato com o solo #
-    if boy.rect.centery > settings.height/1.38:
+    if boy.rect.centery > settings.height / 1.38:
         boy.velocidade_y = 0
-        boy.rect.centery = settings.height/1.38
+        boy.rect.centery = settings.height / 1.38
 
     # Impedir que o personagem ultrapasse o limite horizontal pela direita #
     if boy.rect.centerx > settings.width - settings.char_ratio[0]:
@@ -121,7 +143,6 @@ while True:
         boy.velocidade_y = 0
         boy.rect.centery = -(settings.char_ratio[1])
 
-    # Atualiza a tela #
     pygame.display.update()
 
     # Lê eventos #
