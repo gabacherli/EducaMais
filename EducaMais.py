@@ -6,6 +6,7 @@ from Model.Boy import Boy
 from Model.Settings import Settings
 from Model.Apagador import Apagador
 from Model.Vida import Vida
+from Model.Vilão import Vilao
 
 
 pygame.init()
@@ -26,6 +27,11 @@ gameover_img = pygame.image.load(settings.background_image_gameover).convert_alp
 # Criar instância do personagem #
 boy = Boy(settings)
 characters = pygame.sprite.Group(boy)
+
+# Criar instância do personagem vilão #
+vilao = Vilao(settings)
+char_vilao = pygame.sprite.Group(vilao)
+
 
 # Criar instância do objeto Apagador #
 apagador = Apagador(settings)
@@ -63,9 +69,11 @@ while True:
         obj_vida02.draw(window)
         obj_vida03.draw(window)
         characters.draw(window)
+        char_vilao.draw(window)
         obj_apagador.draw(window)
         characters.update()
         obj_apagador.update()
+        char_vilao.update()
 
         # Caso tiver colisão entre o Boy e o Apagador
         if apagador.rect.colliderect(boy):
