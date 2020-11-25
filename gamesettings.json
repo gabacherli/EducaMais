@@ -2,8 +2,9 @@
   "sound_on": true,
   "soundtrack": "",
   "background_image": "Misc/Images/Background/yellow.jpg",
-  "res_width": 1824,
-  "res_height": 762,
+  "background_image_gameover": "Misc/Images/Background/gameover.png",
+  "res_width": 1360,
+  "res_height": 700,
   "character_to_the_left": "Misc/Images/Characters/looking_left.png",
   "character_to_the_right": "Misc/Images/Characters/looking_right.png",
   "character_walking_to_the_left1": "Misc/Images/Characters/walking_left1.png",
@@ -12,5 +13,13 @@
   "character_walking_to_the_right2": "Misc/Images/Characters/walking_right2.png",
   "character_ratio": "110,145",
   "character_starting_pos_x": "100,450",
-  "character_starting_pos_y": "20,-100"
+  "character_starting_pos_y": "20,-100",
+  "objeto_apagador": "Misc/Images/Objeto/Apagador.png",
+  "objeto_apagador_starting_pos_x": "1250,450",
+  "objeto_apagador_ratio": "50,70",
+  "objeto_vida": "Misc/Images/Objeto/coracao.png",
+  "objeto_vida_starting_pos_x": "0,0",
+  "objeto_vida_ratio": "60,50",
+  "som_gameover": "Misc/Som/game_over.mp3",
+  "som_colisao": "Misc/Som/catch.mp3"
 }
