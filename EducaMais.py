@@ -6,6 +6,7 @@ import random
 from Model.Boy import Boy
 from Model.Platform import Platform
 from Model.Settings import Settings
+from Model.Vilão import Vilao
 from Model.Eraser import Eraser
 from Model.Soundboard import Soundboard
 from Model.Life import Life
@@ -52,6 +53,10 @@ sprite_whiteboard = pygame.sprite.Group(whiteboard)
 boy = Boy(settings)
 sprite_boy = pygame.sprite.Group(boy)
 
+# Criar instância do personagem vilão #
+vilao = Vilao(settings)
+char_vilao = pygame.sprite.Group(vilao)
+
 # Criar instância do apagador #
 eraser = Eraser(settings)
 sprite_eraser = pygame.sprite.Group(eraser)
@@ -80,6 +85,9 @@ while True:
         current_word = random_words[len(random_words) -1]
 
         window.blit(background, background.get_rect(center=window.get_rect().center))
+]
+        char_vilao.draw(window)
+        char_vilao.update()
         sprite_whiteboard.draw(window)
         sprite_platforms.draw(window)
         sprite_boy.draw(window)
