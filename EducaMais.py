@@ -4,9 +4,9 @@ import json
 
 from Model.Boy import Boy
 from Model.Settings import Settings
-from Model.Apagador import Apagador
-from Model.Vida import Vida
-
+from Model.Eraser import Eraser
+from Model.Soundboard import Soundboard
+from Model.Life import Life
 
 pygame.init()
 pygame.display.set_caption("EducaMais")
@@ -14,83 +14,58 @@ pygame.display.set_caption("EducaMais")
 with open('gamesettings.json') as file:
     settings_json = json.load(file)
 
-# Instanciando a classe Settings com as propriedades do arquivo gamesettings.json #
+# Instanciando as classes de configuração #
 settings = Settings(settings_json)
+soundboard = Soundboard(settings)
 
 # Background e resolução da tela #
 window = pygame.display.set_mode((settings.width, settings.height))
 background_image = pygame.image.load(settings.background_image).convert_alpha()
 background = pygame.transform.scale(background_image, (settings.width, settings.height))
-gameover_img = pygame.image.load(settings.background_image_gameover).convert_alpha()
 
 # Criar instância do personagem #
 boy = Boy(settings)
-characters = pygame.sprite.Group(boy)
+sprite_boy = pygame.sprite.Group(boy)
 
-# Criar instância do objeto Apagador #
-apagador = Apagador(settings)
-obj_apagador = pygame.sprite.Group(apagador)
+# Criar instância do eraser #
+eraser = Eraser(settings)
+sprite_eraser = pygame.sprite.Group(eraser)
 
-# Som para colisão 
-def som_colisao():
-    pygame.mixer.music.load(settings.som_colisao)
-    pygame.mixer.music.play(0)
+# Criar sprites da vida do personagem #
+vidas = []
 
-# Som Game over 
-def som_gameover():
-    pygame.mixer.music.load(settings.som_gameover)
-    pygame.mixer.music.play(0)
+for i in range(settings.starting_number_of_lives):
+    vidas.append(Life(settings))
+    vidas[i].rect.centerx = vidas[i].rect.centerx if i == 0 else vidas[i - 1].rect.centerx + 60
 
-# vidas 
-vida01 = Vida(settings)
-obj_vida01 = pygame.sprite.Group(vida01)
-
-vida02 = Vida(settings)
-obj_vida02 = pygame.sprite.Group(vida02)
-vida02.rect.centerx = 60
-
-vida03 = Vida(settings)
-obj_vida03 = pygame.sprite.Group(vida03)
-vida03.rect.centerx = 110
+sprite_lives = pygame.sprite.Group(vidas)
 
 tempo = pygame.time.Clock()
 
 gameover = False
+
 while True:
-    if not gameover: 
+    if not gameover:
         window.blit(background, background.get_rect(center=window.get_rect().center))
-        obj_vida01.draw(window)
-        obj_vida02.draw(window)
-        obj_vida03.draw(window)
-        characters.draw(window)
-        obj_apagador.draw(window)
-        characters.update()
-        obj_apagador.update()
+        sprite_boy.draw(window)
+        sprite_eraser.draw(window)
+        sprite_boy.update()
+        sprite_eraser.update()
+        sprite_lives.draw(window)
 
         # Caso tiver colisão entre o Boy e o Apagador
-        if apagador.rect.colliderect(boy):
-            print("Colidiu")  
-            apagador.rect.x = 1250
-            if vida01:
-                vida01.kill()
-                print("Perdeu 1 vida")
-                vida01 = False
-                som_colisao()
-            elif vida02:
-                vida02.kill()
-                print("Perdeu 2 vidas")
-                vida02 = False
-                som_colisao()
-            elif vida03:
-                vida03.kill()
-                print("Perdeu 3 vidas")
-                vida03 = False
-
-            
-            if vida03 == False:
-                gameover =  True
-                window.blit(gameover_img, gameover_img.get_rect(center=window.get_rect().center))
-                som_gameover()
+        if eraser.rect.colliderect(boy):
+            print("Colidiu")
+            eraser.rect.x = 1250
+            if vidas[len(vidas) - 1] and len(vidas) > 1:
+                vidas[len(vidas) - 1].kill()
+                vidas.pop()
+                soundboard.play_hit_sound()
+            else:
+                gameover_image = pygame.image.load(settings.gameover_image).convert_alpha()
+                gameover = True
+                window.blit(gameover_image, gameover_image.get_rect(center=window.get_rect().center))
+                soundboard.play_gameover_sound()
 
     # Manter personagem dentro dos limites da janela #
     # Impedir que o personagem ultrapasse o limite horizontal pela esquerda #
@@ -99,9 +74,9 @@ while True:
         boy.rect.centerx = 1
 
     # Impedir que o personagem ultrapasse o limite vertical por baixo e manter personagem em contato com o solo #
-    if boy.rect.centery > settings.height/1.38:
+    if boy.rect.centery > settings.height / 1.38:
         boy.velocidade_y = 0
-        boy.rect.centery = settings.height/1.38
+        boy.rect.centery = settings.height / 1.38
 
     # Impedir que o personagem ultrapasse o limite horizontal pela direita #
     if boy.rect.centerx > settings.width - settings.char_ratio[0]:
@@ -113,7 +88,6 @@ while True:
         boy.velocidade_y = 0
         boy.rect.centery = -(settings.char_ratio[1])
 
-    # Atualiza a tela #
     pygame.display.update()
 
     # Lê eventos #
