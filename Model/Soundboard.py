@@ -6,10 +6,12 @@ class Soundboard():
         self.hit_sound = settings.hit_sound
 
     # Sound effects #
-    def play_hit_sound(self):
-        pygame.mixer.music.load(self.hit_sound)
-        pygame.mixer.music.play(0)
+    def play_hit_sound(self, sound_on):
+        if sound_on:
+            pygame.mixer.music.load(self.hit_sound)
+            pygame.mixer.music.play(0)
 
-    def play_gameover_sound(self):
-        pygame.mixer.music.load(self.gameover_sound)
-        pygame.mixer.music.play(0)
+    def play_gameover_sound(self, sound_on):
+        if sound_on:
+            pygame.mixer.music.load(self.gameover_sound)
+            pygame.mixer.music.play(0)

@@ -1,6 +1,8 @@
 import pygame
 import sys
 import json
+import random
+
 
 from Model.Boy import Boy
 from Model.Settings import Settings
@@ -11,8 +13,12 @@ from Model.Life import Life
 pygame.init()
 pygame.display.set_caption("EducaMais")
 
-with open('gamesettings.json') as file:
-    settings_json = json.load(file)
+with open('gamesettings.json') as settings_file:
+    settings_json = json.load(settings_file)
+
+with open('Misc/Text/words.txt') as text_file:
+    words = [line.rstrip() for line in text_file]
+    random_words = random.sample(words, len(words))
 
 # Instanciando as classes de configuração #
 settings = Settings(settings_json)
@@ -56,16 +62,16 @@ while True:
         # Caso tiver colisão entre o Boy e o Apagador
         if eraser.rect.colliderect(boy):
             print("Colidiu")
-            eraser.rect.x = 1250
+            eraser.rect.x = settings.width
             if vidas[len(vidas) - 1] and len(vidas) > 1:
                 vidas[len(vidas) - 1].kill()
                 vidas.pop()
-                soundboard.play_hit_sound()
+                soundboard.play_hit_sound(settings.sound_on)
             else:
                 gameover_image = pygame.image.load(settings.gameover_image).convert_alpha()
                 gameover = True
                 window.blit(gameover_image, gameover_image.get_rect(center=window.get_rect().center))
-                soundboard.play_gameover_sound()
+                soundboard.play_gameover_sound(settings.sound_on)
 
     # Manter personagem dentro dos limites da janela #
     # Impedir que o personagem ultrapasse o limite horizontal pela esquerda #

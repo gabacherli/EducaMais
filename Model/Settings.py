@@ -29,17 +29,6 @@ class Settings():
         self.starting_number_of_lives = settings_json['starting_number_of_lives']
         # Gamover #
         self.gameover_image = settings_json['gameover_image']
-        self.gameover_sound = settings_json['gameover_sound']
         # Sons #
+        self.gameover_sound = settings_json['gameover_sound']
         self.hit_sound = settings_json['hit_sound']
-
-
-
-    # Sound effects #
-    def som_colisao(self):
-        pygame.mixer.music.load(self.som_colisao)
-        pygame.mixer.music.play(0)
-
-    def som_gameover():
-        pygame.mixer.music.load(self.som_gameover)
-        pygame.mixer.music.play(0)
