@@ -7,9 +7,9 @@ class Eraser(pygame.sprite.Sprite):
         self.vl_x = 0
         self.vl_y = 0
         self.image = pygame.transform.scale(eraser, settings.char_ratio)
-        self.rect = pygame.Rect(settings.eraser_starting_pos_x, settings.char_starting_pos_y)
+        self.rect = pygame.Rect(settings.eraser_starting_left_top, settings.char_starting_width_height)
         self.image = self.scale_image(settings.eraser, settings.eraser_ratio)
-        self.velocidade_x = -1.1
+        self.velocidade_x = -2
         self.velocidade_y = 0
         self.gravidade = 0.03
         self.x = 0

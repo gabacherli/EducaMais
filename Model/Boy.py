@@ -16,18 +16,18 @@ class Boy(pygame.sprite.Sprite):
         self.sprites_to_the_left.append(self.scale_image(settings.char_walking_left2, settings.char_ratio))
         self.current_sprite = 0
         self.image = self.sprites_to_the_right[self.current_sprite]
-        self.rect = pygame.Rect(settings.char_starting_pos_x, settings.char_starting_pos_y)
+        self.rect = pygame.Rect(settings.char_starting_left_top, settings.char_starting_width_height)
         self.velocidade_x = 0
         self.velocidade_y = 0
         self.gravidade = 0.03
 
     def mover_para_esquerda(self, settings):
         self.is_moving_to_the_left = True
-        self.velocidade_x = -1
+        self.velocidade_x = -3
 
     def mover_para_direita(self, settings):
         self.is_moving_to_the_right = True        
-        self.velocidade_x = 1
+        self.velocidade_x = 3
 
     def pular(self):
         self.velocidade_y = -3

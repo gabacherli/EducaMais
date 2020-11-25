@@ -16,18 +16,28 @@ class Settings():
         self.char_walking_right1 = settings_json['character_walking_to_the_right1']
         self.char_walking_right2 = settings_json['character_walking_to_the_right2']
         self.char_ratio = tuple(map(int, settings_json['character_ratio'].split(',')))
-        self.char_starting_pos_x = tuple(map(int, settings_json['character_starting_pos_x'].split(',')))
-        self.char_starting_pos_y = tuple(map(int, settings_json['character_starting_pos_y'].split(',')))
+        self.char_starting_left_top = tuple(map(int, settings_json['character_starting_left_top'].split(',')))
+        self.char_starting_width_height = tuple(map(int, settings_json['character_starting_width_height'].split(',')))
         # Apagador #
         self.eraser = settings_json['eraser']
         self.eraser_ratio = tuple(map(int, settings_json['eraser_ratio'].split(',')))
-        self.eraser_starting_pos_x = tuple(map(int, settings_json['eraser_starting_pos_x'].split(',')))
+        self.eraser_starting_left_top = tuple(map(int, settings_json['eraser_starting_left_top'].split(',')))
         # Vida #
         self.life = settings_json['life']
         self.life_ratio = tuple(map(int, settings_json['life_ratio'].split(',')))
-        self.life_starting_pos_x = tuple(map(int, settings_json['life_starting_pos_x'].split(',')))
+        self.life_starting_left_top = tuple(map(int, settings_json['life_starting_left_top'].split(',')))
         self.starting_number_of_lives = settings_json['starting_number_of_lives']
-        # Gamover #
+        # Plataforma #
+        self.platform = settings_json['platform']
+        self.platform_ratio = tuple(map(int, settings_json['platform_ratio'].split(',')))
+        # Quadro branco #
+        self.whiteboard = settings_json['whiteboard']
+        self.whiteboard_ratio = tuple(map(int, settings_json['whiteboard_ratio'].split(',')))
+        self.whiteboard_starting_left_top = tuple(map(int, settings_json['whiteboard_starting_left_top'].split(',')))
+        self.whiteboard_starting_width_height = tuple(map(int, settings_json['whiteboard_starting_width_height'].split(',')))
+        self.whiteboard_word_starting_left_top = tuple(map(int, settings_json['whiteboard_word_starting_left_top'].split(',')))
+        self.whiteboard_word_starting_width_height = tuple(map(int, settings_json['whiteboard_word_starting_width_height'].split(',')))
+        # Gameover #
         self.gameover_image = settings_json['gameover_image']
         # Sons #
         self.gameover_sound = settings_json['gameover_sound']

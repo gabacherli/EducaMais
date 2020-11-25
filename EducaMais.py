@@ -3,12 +3,27 @@ import sys
 import json
 import random
 
-
 from Model.Boy import Boy
+from Model.Platform import Platform
 from Model.Settings import Settings
 from Model.Eraser import Eraser
 from Model.Soundboard import Soundboard
 from Model.Life import Life
+from Model.Whiteboard import Whiteboard
+
+def generate_plataforms():
+    current_word = random_words[len(random_words) -1]
+    platforms = []
+
+    for i in current_word:
+        platform = Platform(settings, i)
+        platforms.append(platform)
+        if len(platforms) > 1 and platform.rect.collidelist(platforms):
+            platforms.pop()
+            new_platform = platform.generate_platform_that_wont_collide(settings, platforms, i)
+            platforms.append(new_platform)
+
+    return platforms
 
 pygame.init()
 pygame.display.set_caption("EducaMais")
@@ -29,15 +44,19 @@ window = pygame.display.set_mode((settings.width, settings.height))
 background_image = pygame.image.load(settings.background_image).convert_alpha()
 background = pygame.transform.scale(background_image, (settings.width, settings.height))
 
+# Criar instância do quadro branco #
+whiteboard = Whiteboard(settings)
+sprite_whiteboard = pygame.sprite.Group(whiteboard)
+
 # Criar instância do personagem #
 boy = Boy(settings)
 sprite_boy = pygame.sprite.Group(boy)
 
-# Criar instância do eraser #
+# Criar instância do apagador #
 eraser = Eraser(settings)
 sprite_eraser = pygame.sprite.Group(eraser)
 
-# Criar sprites da vida do personagem #
+# Criar sprite das vidas do personagem #
 vidas = []
 
 for i in range(settings.starting_number_of_lives):
@@ -46,22 +65,44 @@ for i in range(settings.starting_number_of_lives):
 
 sprite_lives = pygame.sprite.Group(vidas)
 
+# Plataformas #
+platforms = generate_plataforms()
+
+sprite_platforms = pygame.sprite.Group(platforms)
+
 tempo = pygame.time.Clock()
 
 gameover = False
 
 while True:
     if not gameover:
+        # Desenhar elementos fixos da tela #
+        current_word = random_words[len(random_words) -1]
+
         window.blit(background, background.get_rect(center=window.get_rect().center))
+        sprite_whiteboard.draw(window)
+        sprite_platforms.draw(window)
         sprite_boy.draw(window)
         sprite_eraser.draw(window)
+        sprite_lives.draw(window)
         sprite_boy.update()
         sprite_eraser.update()
         sprite_lives.draw(window)
 
-        # Caso tiver colisão entre o Boy e o Apagador
+        # Palavra no quadro-branco #
+        word = whiteboard.write_word_to_word_rectangle(current_word)
+        window.blit(word, whiteboard.word_rectangle)
+
+        # Letras nas plataformas #
+        for i in platforms:
+            last_letter = current_word[-1]
+            letter = i.write_letter_to_letter_rectangle(last_letter)
+            window.blit(letter, i.letter_rectangle)
+
+            current_word = current_word[:-1]
+
+        # Caso tenha colisão entre o personagem e o apagador #
         if eraser.rect.colliderect(boy):
-            print("Colidiu")
             eraser.rect.x = settings.width
             if vidas[len(vidas) - 1] and len(vidas) > 1:
                 vidas[len(vidas) - 1].kill()
