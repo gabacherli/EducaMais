@@ -2,21 +2,21 @@ import pygame
 
 class Boy(pygame.sprite.Sprite):
     def __init__(self, settings):
-        boy = pygame.image.load(settings.char_right)
+        boy = pygame.image.load(settings.aurelinho_to_the_right)
         pygame.sprite.Sprite.__init__(self)
         self.sprites_to_the_right = []
         self.sprites_to_the_left = []
         self.is_moving_to_the_right = False
         self.is_moving_to_the_left = False
-        self.sprites_to_the_right.append(self.scale_image(settings.char_right, settings.char_ratio))
-        self.sprites_to_the_right.append(self.scale_image(settings.char_walking_right1, settings.char_ratio))
-        self.sprites_to_the_right.append(self.scale_image(settings.char_walking_right2, settings.char_ratio))
-        self.sprites_to_the_left.append(self.scale_image(settings.char_left, settings.char_ratio))
-        self.sprites_to_the_left.append(self.scale_image(settings.char_walking_left1, settings.char_ratio))
-        self.sprites_to_the_left.append(self.scale_image(settings.char_walking_left2, settings.char_ratio))
+        self.sprites_to_the_right.append(self.scale_image(settings.aurelinho_to_the_right, settings.aurelinho_ratio))
+        self.sprites_to_the_right.append(self.scale_image(settings.aurelinho_walking_to_the_right1, settings.aurelinho_ratio))
+        self.sprites_to_the_right.append(self.scale_image(settings.aurelinho_walking_to_the_right2, settings.aurelinho_ratio))
+        self.sprites_to_the_left.append(self.scale_image(settings.aurelinho_to_the_left, settings.aurelinho_ratio))
+        self.sprites_to_the_left.append(self.scale_image(settings.aurelinho_walking_to_the_left1, settings.aurelinho_ratio))
+        self.sprites_to_the_left.append(self.scale_image(settings.aurelinho_walking_to_the_left2, settings.aurelinho_ratio))
         self.current_sprite = 0
         self.image = self.sprites_to_the_right[self.current_sprite]
-        self.rect = pygame.Rect(settings.char_starting_left_top, settings.char_starting_width_height)
+        self.rect = pygame.Rect(settings.aurelinho_starting_left_top, settings.aurelinho_starting_width_height)
         self.velocidade_x = 0
         self.velocidade_y = 0
         self.gravidade = 0.03

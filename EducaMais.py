@@ -6,7 +6,7 @@ import random
 from Model.Boy import Boy
 from Model.Platform import Platform
 from Model.Settings import Settings
-from Model.Vilão import Vilao
+from Model.Villain import Villain
 from Model.Eraser import Eraser
 from Model.Soundboard import Soundboard
 from Model.Life import Life
@@ -54,8 +54,8 @@ boy = Boy(settings)
 sprite_boy = pygame.sprite.Group(boy)
 
 # Criar instância do personagem vilão #
-vilao = Vilao(settings)
-char_vilao = pygame.sprite.Group(vilao)
+villain = Villain(settings)
+sprite_villain = pygame.sprite.Group(villain)
 
 # Criar instância do apagador #
 eraser = Eraser(settings)
@@ -85,21 +85,9 @@ while True:
         current_word = random_words[len(random_words) -1]
 
         window.blit(background, background.get_rect(center=window.get_rect().center))
-]
-        char_vilao.draw(window)
-        char_vilao.update()
-        sprite_whiteboard.draw(window)
-        sprite_platforms.draw(window)
-        sprite_boy.draw(window)
-        sprite_eraser.draw(window)
-        sprite_lives.draw(window)
-        sprite_boy.update()
-        sprite_eraser.update()
-        sprite_lives.draw(window)
-
         # Palavra no quadro-branco #
+        sprite_whiteboard.draw(window)
         word = whiteboard.write_word_to_word_rectangle(current_word)
-        window.blit(word, whiteboard.word_rectangle)
 
         # Letras nas plataformas #
         for i in platforms:
@@ -108,6 +96,17 @@ while True:
             window.blit(letter, i.letter_rectangle)
 
             current_word = current_word[:-1]
+
+        window.blit(word, whiteboard.word_rectangle)
+        sprite_platforms.draw(window)
+        sprite_villain.draw(window)
+        sprite_boy.draw(window)
+        sprite_eraser.draw(window)
+        sprite_lives.draw(window)
+        sprite_villain.update(settings)
+        sprite_eraser.update(settings)
+        sprite_boy.update()
+        sprite_lives.draw(window)
 
         # Caso tenha colisão entre o personagem e o apagador #
         if eraser.rect.colliderect(boy):
@@ -134,14 +133,14 @@ while True:
         boy.rect.centery = settings.height / 1.38
 
     # Impedir que o personagem ultrapasse o limite horizontal pela direita #
-    if boy.rect.centerx > settings.width - settings.char_ratio[0]:
+    if boy.rect.centerx > settings.width - settings.aurelinho_ratio[0]:
         boy.velocidade_x = 0
-        boy.rect.centerx = settings.width - settings.char_ratio[0]
+        boy.rect.centerx = settings.width - settings.aurelinho_ratio[0]
 
     # Impedir que o personagem ultrapasse o limite vertical por cima #
-    if boy.rect.centery < -(settings.char_ratio[1]):
+    if boy.rect.centery < -(settings.aurelinho_ratio[1]):
         boy.velocidade_y = 0
-        boy.rect.centery = -(settings.char_ratio[1])
+        boy.rect.centery = -(settings.aurelinho_ratio[1])
 
     pygame.display.update()
 
