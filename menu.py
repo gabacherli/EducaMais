@@ -65,8 +65,8 @@ def draw_menu_buttons():
     pygame.draw.rect(window, background_yellow, start_button)
     pygame.draw.rect(window, background_yellow, exit_button)
 
-    start_text = main_font_bold.render('START GAME', False, black)
-    window.blit(start_text, (settings.width/2.13, 175))
+    start_text = main_font_bold.render('INICIAR JOGO', False, black)
+    window.blit(start_text, (settings.width/2.16, 175))
 
     quit_text = main_font_bold.render('SAIR', False, black)
     window.blit(quit_text, (settings.width/2, 243))
