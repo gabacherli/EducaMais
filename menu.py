@@ -1,7 +1,7 @@
-import json
-import sys
-
 import pygame
+import sys
+import json
+
 from Model.Settings import Settings
 
 with open('gamesettings.json') as settings_file:
@@ -28,7 +28,9 @@ exit_button = pygame.Rect(settings.width/2.2, 230, 200, 50)
 
 click = False
 
-def menu():
+def menu_screen():
+    global click
+
     while True:
         pygame.display.set_caption("Menu principal")
         window.blit(background, background.get_rect(center=window.get_rect().center))
@@ -39,14 +41,12 @@ def menu():
 
         if start_button.collidepoint((mx, my)):
             if click:
-                game()
+                import EducaMais
         if exit_button.collidepoint((mx, my)):
             if click:
                 pygame.quit()
 
         for event in pygame.event.get():
-
-            print(event)
             mx, my = pygame.mouse.get_pos()
 
             if event.type == pygame.QUIT:
@@ -71,4 +71,5 @@ def draw_menu_buttons():
     quit_text = main_font_bold.render('SAIR', False, black)
     window.blit(quit_text, (settings.width/2, 243))
 
-menu()
+
+menu_screen()
