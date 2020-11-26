@@ -24,7 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1078e9d4-fbef-4a4f-9317-c2ffd0885308" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EducaMais.py" beforeDir="false" afterPath="$PROJECT_DIR$/EducaMais.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Misc/Text/words.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Misc/Text/words.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,9 +49,15 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Misc/Text" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\abach\Projects\EducaMais\Misc\Text" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.menu">
     <configuration name="EducaMais" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -150,38 +157,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1606341969517" />
-    <state width="1515" height="261" key="GridCell.Tab.0.bottom" timestamp="1606353408532">
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom" timestamp="1606353968489">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606353408532" />
-    <state width="1515" height="261" key="GridCell.Tab.0.center" timestamp="1606353408532">
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606353968489" />
+    <state width="1515" height="210" key="GridCell.Tab.0.center" timestamp="1606353968489">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606353408532" />
-    <state width="1515" height="261" key="GridCell.Tab.0.left" timestamp="1606353408532">
+    <state width="1515" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606353968489" />
+    <state width="1515" height="210" key="GridCell.Tab.0.left" timestamp="1606353968489">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606353408532" />
-    <state width="1515" height="261" key="GridCell.Tab.0.right" timestamp="1606353408532">
+    <state width="1515" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606353968489" />
+    <state width="1515" height="210" key="GridCell.Tab.0.right" timestamp="1606353968489">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606353408532" />
-    <state width="1515" height="261" key="GridCell.Tab.1.bottom" timestamp="1606353408408">
+    <state width="1515" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606353968489" />
+    <state width="1515" height="261" key="GridCell.Tab.1.bottom" timestamp="1606353422675">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606353408408" />
-    <state width="1515" height="261" key="GridCell.Tab.1.center" timestamp="1606353408408">
+    <state width="1515" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606353422675" />
+    <state width="1515" height="261" key="GridCell.Tab.1.center" timestamp="1606353422675">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1606353408408" />
-    <state width="1515" height="261" key="GridCell.Tab.1.left" timestamp="1606353408408">
+    <state width="1515" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1606353422675" />
+    <state width="1515" height="261" key="GridCell.Tab.1.left" timestamp="1606353422675">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1606353408408" />
-    <state width="1515" height="261" key="GridCell.Tab.1.right" timestamp="1606353408408">
+    <state width="1515" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1606353422675" />
+    <state width="1515" height="261" key="GridCell.Tab.1.right" timestamp="1606353422675">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1606353408408" />
+    <state width="1515" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1606353422675" />
     <state x="522" y="146" key="VcsDiffUtil.ChangesDialog" timestamp="1606344134820">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

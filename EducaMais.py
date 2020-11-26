@@ -32,7 +32,7 @@ pygame.display.set_caption("EducaMais")
 with open('gamesettings.json') as settings_file:
     settings_json = json.load(settings_file)
 
-with open('Misc/Text/words.txt') as text_file:
+with open('Misc/Text/words2.txt') as text_file:
     words = [line.rstrip() for line in text_file]
     random_words = random.sample(words, len(words))
 
@@ -88,6 +88,7 @@ while True:
         # Palavra no quadro-branco #
         sprite_whiteboard.draw(window)
         word = whiteboard.write_word_to_word_rectangle(current_word)
+        sprite_platforms.draw(window)
 
         # Letras nas plataformas #
         for i in platforms:
@@ -98,7 +99,6 @@ while True:
             current_word = current_word[:-1]
 
         window.blit(word, whiteboard.word_rectangle)
-        sprite_platforms.draw(window)
         sprite_villain.draw(window)
         sprite_boy.draw(window)
         sprite_eraser.draw(window)
